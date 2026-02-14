@@ -1,0 +1,313 @@
+:root {
+    --primary-color: #ff6b6b;
+    --paper-color: #fcf5e5;
+    --text-color: #2d3436;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --bubble-bg: #fff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #ffeaa7, #fab1a0);
+    overflow: hidden;
+    font-family: 'Patrick Hand', cursive;
+}
+
+/* Background floating hearts/noise */
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 3.22l-.61-.6a5.5 5.5 0 0 0-7.78 7.77L10 18.78l8.39-8.4a5.5 5.5 0 0 0-7.78-7.77l-.61.61z" fill="%23ff7675" opacity="0.1"/></svg>');
+}
+
+/* Music Player */
+.music-player {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border: 3px solid #2d3436;
+}
+
+.music-player button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.music-player button:hover {
+    transform: scale(1.1);
+}
+
+.song-info {
+    font-family: 'Bangers', cursive;
+    font-size: 1.1rem;
+    color: #2d3436;
+    min-width: 100px;
+    text-align: center;
+}
+
+.volume-control input {
+    width: 80px;
+}
+
+/* Book Container */
+.book-container {
+    perspective: 2500px;
+    width: 95vw;
+    height: 90vh;
+    max-width: 1600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.book {
+    position: relative;
+    width: 650px;
+    /* Wider single page */
+    height: 500px;
+    /* Shorter height for landscape aspect */
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+}
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--paper-color);
+    border: 1px solid #ccc;
+    /* Thinner subtle border */
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    /* Remove padding for full bleed */
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
+    backface-visibility: hidden;
+    z-index: 1;
+    cursor: pointer;
+    overflow: hidden;
+    /* Ensure image doesn't spill if rounded */
+}
+
+/* Page content styling */
+.page .content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    backface-visibility: hidden;
+    /* Ensure content hides when flipped */
+}
+
+/* Full Page Image Style */
+.comic-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #000;
+    padding: 0;
+    box-shadow: none;
+    transform: none !important;
+    /* Override inline rotation */
+    margin: 0;
+    z-index: 0;
+}
+
+.comic-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Captions to overlay at bottom */
+.speech-bubble {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 90%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #2d3436;
+    border-radius: 15px;
+    padding: 15px;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.2rem;
+    color: #2d3436;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    text-align: center;
+}
+
+/* Remove the little triangle tail since it's now a caption box */
+.speech-bubble::before {
+    display: none;
+}
+
+/* Specific Style for the End Card */
+.page.end-card {
+    background: radial-gradient(circle, #ffeaa7, #fab1a0);
+    border: 5px solid #d63031;
+}
+
+.end-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 30px;
+    text-align: center;
+}
+
+.end-card h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #d63031;
+    margin-bottom: 20px;
+}
+
+.end-card p {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.animated-heart {
+    font-size: 4rem;
+    animation: heartbeat 1.2s infinite;
+}
+
+/* Cover & Back - Keep as before but maybe tweak */
+.cover-front,
+.cover-back {
+    background: #ff7675;
+    /* Salmon color */
+    color: white;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.cover-front h1 {
+    font-family: 'Bangers', cursive;
+    font-size: 4rem;
+    margin-bottom: 20px;
+    transform: rotate(-3deg);
+}
+
+.heart-icon {
+    font-size: 5rem;
+    margin: 30px 0;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.3);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.15);
+    }
+
+    60% {
+        transform: scale(1);
+    }
+}
+
+/* Z-Index Handling for Flip Effect */
+.flipped {
+    transform: rotateY(-180deg);
+    z-index: 100 !important;
+}
+
+/* Back of the page */
+.page.back {
+    transform: rotateY(180deg);
+    background-color: #f0e6d2;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .book {
+        width: 95vw;
+        height: 70vw;
+        /* Keep aspect ratio roughly consistent */
+        max-height: 500px;
+    }
+
+    .comic-image-container {
+        height: 100%;
+        /* Full height */
+    }
+
+    .speech-bubble {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+        bottom: 10px;
+    }
+
+    .end-card h2 {
+        font-size: 1.5rem;
+    }
+
+    .end-card p {
+        font-size: 1rem;
+    }
+
+    .music-player {
+        top: auto;
+        bottom: 10px;
+        right: 50%;
+        transform: translateX(50%);
+        width: 95%;
+        justify-content: space-between;
+        padding: 5px 15px;
+    }
+}

@@ -1,0 +1,760 @@
+:root {
+    --bg-deep: #5D001E;
+    /* Deep Burgundy */
+    --bg-rich: #9A031E;
+    /* Rich Red */
+    --accent-gold: #D4AF37;
+    /* Metallic Gold */
+    --text-white: #FAF3DD;
+    /* Cream White */
+    --overlay-glass: rgba(255, 255, 255, 0.1);
+    --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.5);
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Lato', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-deep);
+    font-family: var(--font-body);
+    color: var(--text-white);
+    overflow: hidden;
+    /* No scroll for this experience */
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Ambient Background (Blurred) */
+.ambient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(40px) brightness(0.4);
+    transition: background-image 1s ease-in-out;
+    z-index: -2;
+}
+
+/* Texture Overlay */
+.overlay-texture {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Subtle noise/velvet texture */
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+');
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Persistent Floating Hearts */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.floating-hearts span {
+    position: absolute;
+    bottom: -50px;
+    font-size: 20px;
+    opacity: 0.3;
+    animation: floatUp 15s linear infinite;
+}
+
+.floating-hearts span:nth-child(1) {
+    left: 10%;
+    animation-duration: 20s;
+    animation-delay: 0s;
+    font-size: 30px;
+}
+
+.floating-hearts span:nth-child(2) {
+    left: 30%;
+    animation-duration: 18s;
+    animation-delay: 5s;
+}
+
+.floating-hearts span:nth-child(3) {
+    left: 70%;
+    animation-duration: 22s;
+    animation-delay: 2s;
+    font-size: 25px;
+}
+
+.floating-hearts span:nth-child(4) {
+    left: 85%;
+    animation-duration: 19s;
+    animation-delay: 8s;
+}
+
+.floating-hearts span:nth-child(5) {
+    left: 50%;
+    animation-duration: 24s;
+    animation-delay: 10s;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Intro Section */
+.intro-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, var(--bg-rich), var(--bg-deep));
+    z-index: 100;
+    transition: opacity 1.5s ease;
+}
+
+#intro-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.intro-content {
+    position: relative;
+    /* CRITICAL: Required for z-index to work */
+    z-index: 10;
+    text-align: center;
+    pointer-events: none;
+    /* Pass clicks to canvas if needed, button overrides */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease;
+}
+
+.intro-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.intro-title {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    margin-bottom: 10px;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.intro-subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    opacity: 0.8;
+}
+
+/* Premium Button */
+.premium-btn {
+    pointer-events: auto;
+    background: transparent;
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    padding: 15px 50px;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.premium-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.premium-btn:hover::before {
+    left: 100%;
+}
+
+.premium-btn:hover {
+    background: var(--accent-gold);
+    color: var(--bg-deep);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+/* Hidden Utility */
+.hidden {
+    display: none !important;
+}
+
+/* Story Section */
+.story-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.story-section.visible {
+    opacity: 1;
+}
+
+.book-wrapper {
+    position: relative;
+    width: 90vw;
+    height: 75vh;
+    /* Slightly taller for better portrait support */
+    max-width: 1000px;
+    max-height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.book-page {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    /* Frame handles background */
+    padding: 0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    position: relative;
+    transform-origin: left center;
+    transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+
+    /* Responsive Frame Aspect Ratio */
+    aspect-ratio: 4/3;
+    /* Default Desktop */
+    max-height: 100%;
+    border-radius: 10px;
+    /* Rounded corners */
+    border: 4px solid #fff;
+    /* Thin white border */
+    overflow: hidden;
+    /* Crop blur */
+    margin: auto;
+}
+
+.photo-frame {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #000;
+}
+
+/* 1. Blurred Background Layer */
+.photo-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Fill frame */
+    filter: blur(22px);
+    /* Requested blur */
+    transform: scale(1.15);
+    /* Remove blur edges */
+    opacity: 0.55;
+    /* Requested opacity */
+    z-index: 1;
+}
+
+/* 2. Gradient Overlay */
+.photo-overlay-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+    z-index: 2;
+}
+
+/* 3. Main Photo Layer */
+.photo-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Never crop */
+    z-index: 3;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.photo-main.loaded {
+    opacity: 1;
+}
+
+/* Navigation Buttons */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+}
+
+.nav-btn:hover {
+    background: rgba(212, 175, 55, 0.8);
+    color: var(--bg-deep);
+}
+
+.prev {
+    left: -80px;
+}
+
+.next {
+    right: -80px;
+}
+
+/* Progress Indicator */
+.progress-indicator {
+    margin-top: 30px;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+/* Quiz Section */
+.quiz-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    /* Dark overlay */
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 200;
+}
+
+.quiz-section.visible {
+    opacity: 1;
+}
+
+.premium-card {
+    background: var(--bg-rich);
+    padding: 40px;
+    border: 1px solid var(--accent-gold);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+.quiz-options button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.quiz-options button:hover {
+    background: var(--accent-gold);
+    color: var(--bg-deep);
+}
+
+/* Result Section */
+.result-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-deep);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 300;
+}
+
+.result-content {
+    text-align: center;
+    font-family: var(--font-heading);
+}
+
+.heart-pulse {
+    font-size: 4rem;
+    animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Music Control (Hidden/Auto) */
+/* Spotify Styles Removed */
+
+#volume-slider {
+    width: 100%;
+    accent-color: var(--accent-gold);
+    cursor: pointer;
+}
+
+/* Captions */
+.caption-container {
+    margin-top: 20px;
+    min-height: 50px;
+    text-align: center;
+}
+
+.photo-caption {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    /* Large and elegant */
+    color: var(--text-white);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.8s ease;
+}
+
+.photo-caption.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.caption-lang {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--accent-gold);
+    opacity: 0;
+    margin-top: 5px;
+    font-style: italic;
+    transform: translateY(10px);
+    transition: all 0.8s ease 0.1s;
+    /* Slight delay after main caption */
+}
+
+.caption-lang.visible {
+    opacity: 0.8;
+    transform: translateY(0);
+}
+
+/* Quiz States */
+.quiz-options button.correct {
+    background-color: #28a745 !important;
+    /* Green */
+    color: white !important;
+    border-color: #28a745 !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.6);
+}
+
+.quiz-options button.wrong {
+    background-color: #dc3545 !important;
+    /* Red */
+    color: white !important;
+    border-color: #dc3545 !important;
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+
+    75% {
+        transform: translateX(-5px);
+    }
+}
+
+/* Sparkle / Confetti */
+.particle {
+    position: absolute;
+    pointer-events: none;
+    animation: fadeAndDrop 1.5s linear forwards;
+    z-index: 999;
+}
+
+@keyframes fadeAndDrop {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(50px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Result Screen Enhancements */
+.result-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--accent-gold);
+}
+
+.result-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.result-btns button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: 1px solid var(--accent-gold);
+    background: transparent;
+    color: var(--accent-gold);
+    cursor: pointer;
+    font-family: var(--font-heading);
+    transition: 0.3s;
+}
+
+.result-btns button:hover {
+    background: var(--accent-gold);
+    color: var(--bg-deep);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .nav-btn {
+        padding: 10px;
+        font-size: 1.5rem;
+        background: transparent;
+    }
+
+    .prev {
+        left: 10px;
+    }
+
+    .next {
+        right: 10px;
+    }
+
+    .book-wrapper {
+        width: 85vw;
+        height: 60vh;
+    }
+
+    .intro-title {
+        font-size: 2rem;
+    }
+}
+
+/* --- Final Polish: Book Texture & 3D Feel --- */
+.photo-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+');
+    /* Subtle grain */
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 5;
+    mix-blend-mode: multiply;
+}
+
+.book-wrapper {
+    perspective: 1500px;
+    /* Enable 3D */
+}
+
+.photo-card {
+    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.5s;
+    transform-style: preserve-3d;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    /* Deep shadow */
+}
+
+/* Page Turn Animation Classes (Refined: Slide & Tilt) */
+.photo-card.page-turning-left {
+    transform-origin: center center;
+    transform: translateX(-100%) rotateY(-20deg) scale(0.9);
+    opacity: 0;
+}
+
+.photo-card.page-turning-right {
+    transform-origin: center center;
+    transform: translateX(100%) rotateY(20deg) scale(0.9);
+    opacity: 0;
+}
+
+/* Interim Section */
+.interim-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #5D001E 0%, #2b0a12 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    transition: opacity 1s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.interim-section.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.interim-content {
+    text-align: center;
+    color: var(--accent-gold);
+    padding: 2rem;
+    max-width: 600px;
+    animation: zoomInSoft 10s ease infinite alternate;
+}
+
+@keyframes zoomInSoft {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.05);
+    }
+}
+
+.interim-content h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-family: var(--font-heading);
+}
+
+.interim-content p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: var(--text-white);
+    opacity: 0.9;
+}
+
+.interim-content .highlight-text {
+    font-size: 1.4rem;
+    color: var(--accent-gold);
+    font-weight: bold;
+    margin-top: 30px;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.floating-hearts-static {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    animation: floatUp 3s ease-in-out infinite;
+}
+
+/* Quiz Pills */
+.quiz-options button {
+    border-radius: 50px;
+    /* Pill Shape */
+    padding: 15px 30px;
+    margin: 10px 0;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(43, 10, 18, 0.8);
+    /* Dark Burgundy */
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* Smooth bouncy */
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-options button:hover:not(:disabled) {
+    transform: scale(1.05);
+    background: rgba(93, 0, 30, 0.9);
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.quiz-options button:active {
+    transform: scale(0.98);
+}

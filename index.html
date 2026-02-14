@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bizim Hikayemiz</title>
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Background Layer (Global blurred effect) -->
+    <div id="ambient-bg" class="ambient-bg"></div>
+    <div class="overlay-texture"></div>
+    <!-- Persistent Floating Hearts -->
+    <div class="floating-hearts">
+        <span>❤️</span><span>💖</span><span>💕</span><span>❤️</span><span>💖</span>
+    </div>
+
+    <!-- Intro Section: Seed to Tree -->
+    <section id="intro" class="intro-section">
+        <canvas id="intro-canvas"></canvas>
+        <div class="intro-content">
+            <h1 class="intro-title">Hadi hikayemizi başlatalım</h1>
+            <p class="intro-subtitle">Sayfa sayfa, kalpten kalbe.</p>
+            <button id="start-btn" class="premium-btn">Başla</button>
+        </div>
+    </section>
+
+    <!-- Story Mode: Single Page Book -->
+    <section id="story" class="story-section hidden">
+        <div class="book-wrapper">
+            <!-- Navigation -->
+            <button id="prev-btn" class="nav-btn prev" aria-label="Previous Page">❮</button>
+
+            <div id="book-page" class="book-page photo-card">
+                <div class="photo-frame">
+                    <!-- Dual Layer Setup -->
+                    <img id="photo-bg" src="" alt="Background Blur" class="photo-bg">
+                    <div class="photo-overlay-gradient"></div>
+                    <img id="current-photo" src="" alt="Memory" class="photo-main">
+                </div>
+            </div>
+
+            <button id="next-btn" class="nav-btn next" aria-label="Next Page">❯</button>
+        </div>
+
+        <div class="progress-indicator">
+            <span id="current-page-num">1</span> / <span id="total-pages">30</span>
+        </div>
+
+        <!-- Captions -->
+        <div id="caption-container" class="caption-container">
+            <p id="photo-caption" class="photo-caption"></p>
+            <p id="caption-lang" class="caption-lang"></p>
+        </div>
+    </section>
+
+    <!-- Interim Message (Bridge) -->
+    <section id="interim-message" class="interim-section hidden">
+        <div class="interim-content">
+            <div class="floating-hearts-static">💖</div>
+            <h2>Birlikte çok fazla güzel anımız oldu…</h2>
+            <p>Hepsini koymaya tabii ki vaktim yetmedi.</p>
+            <p>Ama birlikte çok güzel ve mutlu bir geleceğimiz olacak.</p>
+            <p class="highlight-text">Seni mümkün olan tüm dillerde seviyorum.</p>
+            <p>Sevgililer günümüz kutlu olsun ❤️</p>
+            <button id="start-quiz-btn" class="premium-btn">Teste geçelim 😌</button>
+        </div>
+    </section>
+
+    <!-- Quiz Section (Placeholders) -->
+    <section id="quiz" class="quiz-section hidden">
+        <div class="quiz-container">
+            <div id="quiz-card" class="premium-card">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Result -->
+    <section id="result" class="result-section hidden">
+        <div class="result-content">
+            <div class="heart-pulse">❤️</div>
+            <h2 id="result-title">Sonsuza Dek...</h2>
+            <p id="result-desc">Sevgililer Günümüz Kutlu Olsun</p>
+            <div id="result-buttons"></div>
+        </div>
+    </section>
+
+    <!-- Music Control (Spotify Removed) -->
+    <!-- Local Audio Auto-Plays on Start -->
+    <audio id="bg-music" loop>
+        <source src="music/Yalın - Cumhuriyet (Official Video).mp3" type="audio/mpeg">
+    </audio>
+    <audio id="page-flip-sound">
+        <!-- Placeholder for flip sound, optional -->
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
