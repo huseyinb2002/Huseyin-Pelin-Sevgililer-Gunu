@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const quizData = [
     {
       q: "Benim favori tatlım nedir?",
-      a: ["baklava", "künefe", "dudakların", "peynir helvası"],
+      a: ["baklava", "künefe", "sensin", "peynir helvası"],
       correct: 2 // Index 2 -> C
     },
     {
